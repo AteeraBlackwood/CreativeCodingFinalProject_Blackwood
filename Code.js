@@ -10,6 +10,7 @@ let downarrow;
 let x=0;//allows size values to be changed
 let y=0;	
 
+
 var victim;
 var canvas
 var SCENE_W = 3000;
@@ -39,6 +40,7 @@ function setup() {
 	background(163, 28, 28);
 	canvas.width = view_wview;
 	canvas.height = view_hview;
+	
 
 }
 
@@ -50,22 +52,38 @@ function draw() {
 		loop();
 	}
 	else{
-		background(173, 173, 173);//change to hallway
-		strokeWeight(2.5);
+		background(173, 173, 173);//change to hallway of this color
+		strokeWeight(2.5);//floor
 		line(0,450,3000,450);
 		noStroke();
 		fill(145,0,0);
 		ellipse(725,450,150,50);//blood
 		circle(825,470,50);
 		stroke(1);
-		doors();
+		doors();//generate doors
 		image(rightarrow,860,220,50,75);
 		image(downarrow,725,20,50,75);
 		image(victim,x+100,y+100,369,378);
+		/*if (victim.x < 20) victim.x = 20;
+    if (victim.y < 20) victim.y = 20;
+    if (victim.x > room_width-20) victim.x = room_width-20;
+    if (victim.y > room_height-20) victim.y = room_height-20;*/
 	}
 	if(keyCode===RIGHT_ARROW){//proceed to next part
 		image(victim, x+100,y+100,369,378);
 		x+=4;
+		if (victim.x==view_wview){
+			background(173, 173, 173);
+			strokeWeight(2.5);//floor
+			line(0,450,3000,450);
+			noStroke();
+			fill(145,0,0);
+			ellipse(725,450,150,50);//blood
+			circle(825,470,50);
+			stroke(1);
+			image(rightarrow,860,220,50,75);
+			image(downarrow,725,20,50,75);
+			image(victim,x+100,y+100,369,378);
 	}
 	if(keyCode===DOWN_ARROW){//leave building
 		let b=100;
@@ -81,8 +99,8 @@ function draw() {
 		x+=4;
 			
 	}
-	if(millis()-starttime==times[0,1,2,3,4]){
-		victim.filter(BLUR);
+//	if(millis()-starttime==times[0,1,2,3,4]){
+//		victim.filter(BLUR);
 	}
 	}
 	}
