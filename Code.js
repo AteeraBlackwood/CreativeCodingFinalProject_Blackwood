@@ -12,7 +12,7 @@ let downarrow;
 let x=0;//allows size values to be changed
 let y=0;	
 
-
+var bloodstains=[blood1(),blood2(),blood3(),blood4()];
 var victim;
 var canvas
 var SCENE_W = 3000;
@@ -41,8 +41,8 @@ function preload(){
 function setup() {
 	createCanvas(1000, 500);
 	background(163, 28, 28);
-	canvas.width = view_wview;
-	canvas.height = view_hview;
+	//canvas.width = view_wview;
+	//canvas.height = view_hview;
 	
 
 }
@@ -58,11 +58,8 @@ function draw() {
 		background(173, 173, 173);//change to hallway of this color
 		strokeWeight(2.5);//floor
 		line(0,450,3000,450);
-		noStroke();
-		fill(145,0,0);
-		ellipse(725,450,150,50);//blood
-		circle(825,470,50);
-		stroke(1);
+		bloodstains[Math.floor(Math.random()*bloodstains.length)];
+		document.body.innerHTML = randomItem;
 		doors();//generate doors
 		image(rightarrow,860,220,50,75);
 		image(downarrow,725,20,50,75);
@@ -72,8 +69,14 @@ function draw() {
 	if(keyCode===RIGHT_ARROW){//proceed to next part
 		image(victim, x+100,y+100,369,378);
 		x+=4;
-			if(x>=1000){//as long as the right is chosen, the victim will continue down the hallway
-				image(victim, x,y+100,369,378);
+			if(x>=width){//as long as the right is chosen, the victim will continue down the hallway
+				if(keyIsDown(RIGHT_ARROW)){
+				x=-100
+				}
+				else{ 
+					image(victim, 5,y+100,369,378)
+				}
+					
 			}
 	}
 	if(keyCode===DOWN_ARROW){//leave building
@@ -86,7 +89,7 @@ function draw() {
 		image(victim, x+100,y+100,369,378);
 		x+=4;
 		if(x>=400){//victim going out the door
-		background(field,0,0);
+		background(field,0,0);//they're free!
 			textFont('Georgia',40);
 			text('YAY! I made it out!', 325, 100);
 		image(imfree, 350,y+100,339,348);
@@ -118,10 +121,29 @@ function doors(){
 
 function blood1(){
 	noStroke();
-			fill(145,0,0);
-			ellipse(725,450,150,50);//blood
-			circle(825,470,50);
+	fill(145,0,0);
+	ellipse(725,450,150,50);//blood
+	circle(825,470,50);
 }
+	function blood2(){
+	noStroke();
+	fill(145,0,0);
+	ellipse(710,440,150,70);//blood
+}
+function blood3(){
+	noStroke();
+	fill(145,0,0);
+	ellipse(740,460,120,85);//blood
+}
+function blood4(){
+	noStroke();
+	fill(145,0,0);
+	circle(755,470,10);
+	circle(725,470,80);
+	ellipse(785,470,50,10);
+	circle(825,470,50);
+}
+
 
 function loadData() {
 	}
