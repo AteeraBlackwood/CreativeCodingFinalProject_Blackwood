@@ -5,6 +5,8 @@ let heartbeat;
 let leavesrussle;
 let roar;
 let wind;
+let imfree;
+let monster;
 let rightarrow;
 let downarrow;
 let x=0;//allows size values to be changed
@@ -32,7 +34,8 @@ function preload(){
 	rightarrow = loadImage("Arrow.png");//found here: https://toppng.com/photo/402764
 	downarrow = loadImage("Arrow-Copy.png");
 	victim = loadImage("Victim.PNG");
-	//(550, 550, 50, 100)
+	imfree = loadImage("ImFree.png");
+	//monster = loadImage("");
 	}
 
 function setup() {
@@ -64,48 +67,46 @@ function draw() {
 		image(rightarrow,860,220,50,75);
 		image(downarrow,725,20,50,75);
 		image(victim,x+100,y+100,369,378);
-		/*if (victim.x < 20) victim.x = 20;
-    if (victim.y < 20) victim.y = 20;
-    if (victim.x > room_width-20) victim.x = room_width-20;
-    if (victim.y > room_height-20) victim.y = room_height-20;*/
+		
 	}
 	if(keyCode===RIGHT_ARROW){//proceed to next part
 		image(victim, x+100,y+100,369,378);
 		x+=4;
-		if (victim.x==view_wview){
-			background(173, 173, 173);
-			strokeWeight(2.5);//floor
-			line(0,450,3000,450);
-			noStroke();
-			fill(145,0,0);
-			ellipse(725,450,150,50);//blood
-			circle(825,470,50);
-			stroke(1);
-			image(rightarrow,860,220,50,75);
-			image(downarrow,725,20,50,75);
-			image(victim,x+100,y+100,369,378);
+			if(x>=1000){//as long as the right is chosen, the victim will continue down the hallway
+				image(victim, x,y+100,369,378);
+			}
 	}
 	if(keyCode===DOWN_ARROW){//leave building
 		let b=100;
-	for(let i=0; i<650;i++){
+		for(let i=0; i<650;i++){
 		fill(0, 78, 145);
 		rect(650,b,200,350);
 		b+=500;
+	}
 		image(victim, x+100,y+100,369,378);
 		x+=4;
-		if(x>=650){
+		if(x>=400){//victim going out the door
 		background(field,0,0);
-		image(victim, x,y+100,369,378);	
-		x+=4;
-			
-	}
+			textFont('Georgia',40);
+			text('YAY! I made it out!', 325, 100);
+		image(imfree, 350,y+100,339,348);
+		y+=4;
+			if(y>=200){//victim jumps
+			y-=4;
+				if(y<=100){
+					y+=4;
+				}
+			}
 //	if(millis()-starttime==times[0,1,2,3,4]){
 //		victim.filter(BLUR);
 	}
 	}
+	if(millis()-starttime==60000){
+		background(69,69,69);
+		//
 	}
-	
 }
+	
 function doors(){
 	let b=100;
 	for(let i=0; i<650;i++){
@@ -113,6 +114,13 @@ function doors(){
 		rect(650,b,200,350);
 		b+=500;
 	}
+}
+
+function blood1(){
+	noStroke();
+			fill(145,0,0);
+			ellipse(725,450,150,50);//blood
+			circle(825,470,50);
 }
 
 function loadData() {
