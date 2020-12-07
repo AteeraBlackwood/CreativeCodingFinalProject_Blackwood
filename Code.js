@@ -12,12 +12,15 @@ let downarrow;
 let x=0;//allows size values to be changed
 let y=0;	
 
-var bloodstains=[blood1(),blood2(),blood3(),blood4()];
+var bloodstains;
 var victim;
 var canvas
 var SCENE_W = 3000;
 var times=[30000,40000,50000,60000,20000]
-
+let xarray=[650,668,683,691,711,725,754,789,800,822,848];
+let yarray=[451,463,479,487,495];
+let warray=[5,12,60,84,101,126,150,172,200];
+let newarray=[1,5,10,15,20,25,30,35,40,45,50,55,60]
 //frame.focus();
 
 view_xview = 0;
@@ -41,9 +44,14 @@ function preload(){
 function setup() {
 	createCanvas(1000, 500);
 	background(163, 28, 28);
+	for(let i=0; i<10; i++){
+		xarray.push(floor(random(1,200)));
+		yarray.push(floor(random(1,200)));
+		warray.push(floor(random(1,200)));
+	}
 	//canvas.width = view_wview;
 	//canvas.height = view_hview;
-	
+	print(xarray);
 
 }
 
@@ -56,10 +64,18 @@ function draw() {
 	}
 	else{
 		background(173, 173, 173);//change to hallway of this color
+		fill(145,0,0);
+		textFont('Georgia',20);
+		text('There is blood coming from this door. I do not trust it.', 100, 70);
+		text('Should I open it or keep going?',100,90);
 		strokeWeight(2.5);//floor
 		line(0,450,3000,450);
-		bloodstains[Math.floor(Math.random()*bloodstains.length)];
-		document.body.innerHTML = randomItem;
+		for(i=0;i<10;i++){
+			noStroke();
+			fill(145,0,0);
+			ellipse(xarray[i],yarray[i], warray[i],20);
+		}
+		stroke(1);
 		doors();//generate doors
 		image(rightarrow,860,220,50,75);
 		image(downarrow,725,20,50,75);
@@ -70,8 +86,14 @@ function draw() {
 		image(victim, x+100,y+100,369,378);
 		x+=4;
 			if(x>=width){//as long as the right is chosen, the victim will continue down the hallway
+				for(i=0;i<5;i++){
+			noStroke();
+			fill(145,0,0);
+			ellipse(xarray[i]+newarray[i],yarray[i], warray[i]*1.5,20);
+		}
 				if(keyIsDown(RIGHT_ARROW)){
 				x=-100
+					
 				}
 				else{ 
 					image(victim, 5,y+100,369,378)
@@ -100,11 +122,10 @@ function draw() {
 					y+=4;
 				}
 			}
-//	if(millis()-starttime==times[0,1,2,3,4]){
-//		victim.filter(BLUR);
+	
 	}
 	}
-	if(millis()-starttime==60000){
+	if(millis()-starttime==40000){//time limit for monster appearance
 		background(69,69,69);
 		//
 	}
@@ -122,7 +143,7 @@ function doors(){
 function blood1(){
 	noStroke();
 	fill(145,0,0);
-	ellipse(725,450,150,50);//blood
+	ellipse(x[1],450,150,50);//blood
 	circle(825,470,50);
 }
 	function blood2(){
