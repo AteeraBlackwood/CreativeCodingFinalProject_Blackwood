@@ -19,7 +19,7 @@ var canvas
 var SCENE_W = 3000;
 var times=[30000,40000,50000,60000,20000]
 let xarray=[650,668,683,691,711,725,754,789,800,822,848];
-let yarray=[451,463,479,487,495];
+let yarray=[420,451,463,479,487,495];
 let warray=[5,12,60,84,101,126,150,172,200];
 let newarray=[1,5,10,15,20,25,30,35,40,45,50,55,60]
 
@@ -94,7 +94,7 @@ function draw() {
 		image(victim, x+100,y+100,369,378);
 		x+=4;
 			if(x>=width){//as long as the right is chosen, the victim will continue down the hallway
-				for(i=0;i<5;i++){
+				for(i=0;i<10;i++){
 			noStroke();
 			fill(145,0,0);
 			ellipse(xarray[i]+newarray[i],yarray[i], warray[i]*1.5,20);
@@ -165,4 +165,3 @@ function doors(){
 		b+=500;
 	}
 }
-
