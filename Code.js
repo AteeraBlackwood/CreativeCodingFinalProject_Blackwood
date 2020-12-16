@@ -10,6 +10,11 @@ let youdied;
 let rightarrow;
 let downarrow;
 let monsterroar;
+let doorslam;
+let skeleton;
+let strings;
+let cheer;
+let doorcreak;
 let x=0;//allows size values to be changed
 let y=0;	
 
@@ -43,8 +48,13 @@ function preload(){
 	youdied = loadImage("youdied.jpg");
 	monsterroar = loadSound("MonsterAlienRoarAggressive.mp3");
 	wind =loadSound("WindQuietCreaks.mp3");
-	heartbeat = loadSound("heartbeatsound.mp3")//EVERYTIME I TRY TO ADD A HEARTBEAT THE AUDIO SCREWS UP. I'VE TRIED 4 DIFFERENT FILES AND ALL THE OTHER AUDIO WORK!
-	}
+	heartbeat = loadSound("heartbeatsound.mp3");//EVERYTIME I TRY TO ADD A HEARTBEAT THE AUDIO SCREWS UP. I'VE TRIED 4 DIFFERENT FILES AND ALL THE OTHER AUDIO WORK!
+	doorslam = loadSound("DoorSlam.mp3");//for closing doors
+	skeleton = loadImage("Skeleton.jpg");
+	strings = loadSound("SlasherStrings.mp3");
+	cheer = loadSound("Cheer.mp3");
+	doorcreak = loadSound("DoorCreak.mp3");
+}
 
 function setup() {
 	createCanvas(1000, 500);
@@ -76,6 +86,8 @@ function draw() {
 		textFont('Georgia',20);
 		text('There is blood coming from this door. I do not trust it.', 100, 70);
 		text('Should I open it or keep going?',100,90);
+		textFont('Georgia',10);
+		text('Press the up or down keys on the keyboard to proceed.', 100, 490);
 		strokeWeight(2.5);//floor
 		line(0,450,3000,450);
 		for(i=0;i<10;i++){
@@ -92,16 +104,15 @@ function draw() {
 	}
 	if(keyCode===RIGHT_ARROW){//proceed to next part
 		image(victim, x+100,y+100,369,378);
-		x+=4;
+		x+=5;
 			if(x>=width){//as long as the right is chosen, the victim will continue down the hallway
 				for(i=0;i<10;i++){
 			noStroke();
 			fill(145,0,0);
-			ellipse(xarray[i]+newarray[i],yarray[i], warray[i]*1.5,20);
+			ellipse(xarray[i]+newarray.random[i],yarray.random[i], warray.random[i]*1.5,20);
 		}
 				if(keyIsDown(RIGHT_ARROW)){
 				x=-100
-					
 				}
 				else{ 
 					image(victim, 5,y+100,369,378)
@@ -110,9 +121,11 @@ function draw() {
 			}
 	}
 	if(keyCode===DOWN_ARROW){//leave building
+		while(millis()-starttime<=25000){
 		let b=100;
 		for(let i=0; i<650;i++){
 		fill(0, 78, 145);
+		doorcreak.play();	
 		rect(650,b,200,350);
 		b+=500;
 	}
@@ -123,6 +136,8 @@ function draw() {
 			textFont('Georgia',40);
 			text('YAY! I made it out!', 325, 100);
 		image(imfree, 350,y+100,339,348);
+		duration(3.5);	
+		cheer.play();	
 		y+=4;
 			if(y>=200){//victim jumps
 			y-=4;
@@ -130,11 +145,36 @@ function draw() {
 					y+=4;
 				}
 			}
+		}
+		else{	
+			background(skeleton,0,0);//skeleton jumpscare
+			strings.play();
+			if(millis()-starttime<=25000){//returns you back to the hallway
+			wind.play();
+			background(173, 173, 173);//change to hallway of this color
+			fill(145,0,0);
+			textFont('Georgia',20);	
+			text('How about no', 100, 70);
+			strokeWeight(2.5);//floor
+		line(0,450,3000,450);
+		for(i=0;i<10;i++){
+			noStroke();
+			fill(145,0,0);
+			ellipse(xarray[i],yarray[i], warray[i],20);
+		}
+		stroke(1);
+		doors();//generate doors
+		image(rightarrow,860,220,50,75);
+		image(downarrow,725,20,50,75);
+		image(victim,x+100,y+100,369,378);//The p5.play animation tools kept on having problems so I had to use a still image 
+		
+	}	
+		}
 	
 	}
 	}
 	
-	if(millis()-starttime>=35000){//time limit for monster appearance
+	if(millis()-starttime>=40000){//time limit for monster appearance
 		wind.pause();
 		monsterroar.play();
 		var c=50
